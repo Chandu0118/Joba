@@ -2,22 +2,22 @@ import streamlit as st
 from backend import process_cv_and_generate_cover_letter, analyze_feedback
 import os
 
-# Custom CSS inspired by KLIPSAN (yellow and black, bold typography)
+# Custom CSS with logo, gradient background, and refined styling
 st.markdown("""
     <style>
     .main {
-        background-color: #ffffff; /* White background like KLIPSAN */
+        background: linear-gradient(to bottom, #f9f9f9, #ffffff); /* Light gray to white gradient */
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     .stTitle {
-        color: #000000; /* Black title color */
+        color: #000000; /* Black title */
         font-size: 40px;
         font-weight: bold;
         text-align: center;
-        font-family: 'Arial', sans-serif; /* Modern font */
-        background: linear-gradient(to right, #f1c40f, #f39c12); /* Yellow gradient like KLIPSAN */
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to right, #f1c40f, #f39c12); /* Yellow gradient */
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -27,13 +27,18 @@ st.markdown("""
         font-size: 28px;
         font-weight: bold;
         margin-top: 20px;
+        border-bottom: 2px solid #f1c40f; /* Yellow underline for headers */
     }
     .stTextInput, .stSelectbox, .stFileUploader {
-        background-color: #ffffff; /* White inputs */
+        background-color: #ffffff;
         border: 2px solid #f1c40f; /* Yellow border */
         border-radius: 8px;
         padding: 12px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s; /* Hover scale effect */
+    }
+    .stTextInput:hover, .stSelectbox:hover, .stFileUploader:hover {
+        transform: scale(1.02); /* Slight zoom on hover */
     }
     .stButton {
         background-color: #f1c40f; /* Yellow button */
@@ -44,10 +49,12 @@ st.markdown("""
         font-weight: bold;
         border: none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s; /* Smooth transition for hover */
     }
     .stButton:hover {
-        background-color: #f39c12; /* Darker yellow on hover */
+        background-color: #f39c12; /* Darker yellow */
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px); /* Lift effect */
     }
     .stSuccess {
         background-color: #2ecc71; /* Green for success */
@@ -66,12 +73,21 @@ st.markdown("""
     .section {
         margin-bottom: 20px;
         padding: 15px;
-        background-color: #f9f9f9; /* Light gray background for sections */
+        background-color: #ffffff; /* White sections */
         border-radius: 8px;
         border: 1px solid #f1c40f;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    /* Add a logo or icon at the top */
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
     }
     </style>
 """, unsafe_allow_html=True)
+
+# Add a logo (replace with your image URL or local path)
+st.markdown('<div class="logo"><img src="https://via.placeholder.com/150x50.png?text=CV+Logo" alt="CV Logo" style="max-width: 150px;"></div>', unsafe_allow_html=True)
 
 # Title and description (English UI)
 st.markdown('<div class="main"><h1 class="stTitle">Automated CV & Cover Letter Generator</h1>', unsafe_allow_html=True)
