@@ -1,9 +1,12 @@
-# backend.py
-
 from docx import Document
 import requests
-from langchain.llms import OpenAI, DeepSeek, Qwen
+import os
+from dotenv import load_dotenv
 from grok_api import GrokModel
+
+# Load environment variables
+load_dotenv()
+grok_api_key = os.getenv("GROK_API_KEY")
 
 def process_cv_and_generate_cover_letter(cv_path, job_input, selected_llm, output_language):
     # Load CV
@@ -17,15 +20,10 @@ def process_cv_and_generate_cover_letter(cv_path, job_input, selected_llm, outpu
     else:
         job_description = job_input
 
-    # Initialize LLM
-    if selected_llm == "ChatGPT":
-        llm = OpenAI(model_name="gpt-3.5-turbo")
-    elif selected_llm == "Grok":
-        llm = GrokModel(model_name="grok-1")
-    elif selected_llm == "Qwen":
-        llm = Qwen()
-    elif selected_llm == "DeepSeek":
-        llm = DeepSeek(model_name="deepseek-coder")
+    # Initialize Grok only
+    if selected_llm != "Grok":
+        raise ValueError("Only Grok LLM is supported for now.")
+    llm = GrokModel(model_name="grok-2", api_key=grok_api_key)  # Using Grok 2 as specified
 
     # Generate CV Updates
     prompt_cv = (
@@ -41,7 +39,7 @@ def process_cv_and_generate_cover_letter(cv_path, job_input, selected_llm, outpu
     updated_cv_doc.add_paragraph(updated_cv_text)
     if not os.path.exists("output"):
         os.makedirs("output")
-    updated_cv_path = "output/updated_cv.docx"
+    updated_cv_path = os.path.join("output", "updated_cv.docx")
     updated_cv_doc.save(updated_cv_path)
 
     # Generate Cover Letter
@@ -51,8 +49,13 @@ def process_cv_and_generate_cover_letter(cv_path, job_input, selected_llm, outpu
     )
     cover_letter = llm(prompt_cover)
 
-    return updated_cv_path, cover_letter
+    # Save Cover Letter as .docx
+    cover_letter_doc = Document()
+    cover_letter_doc.add_paragraph(cover_letter)
+    cover_letter_path = os.path.join("output", "cover_letter.docx")
+    cover_letter_doc.save(cover_letter_path)
 
+    return updated_cv_path, cover_letter_path
 
 def analyze_feedback(original_cv_path, updated_cv_path):
     original_doc = Document(original_cv_path)
@@ -63,4 +66,6 @@ def analyze_feedback(original_cv_path, updated_cv_path):
 
     # Compare texts and log differences for learning
     differences = set(updated_text.split()) - set(original_text.split())
+    with open("feedback_log.txt", "a", encoding="utf-8") as log:
+        log.write(f"Differences in CV update: {', '.join(differences)}\n")
     return ", ".join(differences)
