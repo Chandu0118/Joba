@@ -90,7 +90,7 @@ st.markdown("""
 st.markdown('<div class="logo"><img src="https://assets.grok.com/users/4a3c6e05-e468-4104-bd65-f91d721e0ad3/END3BIYCLpVPAbk0-generated_image.jpg" alt="ProCV Craft Logo" style="max-width: 300px; border-radius: 8px;"></div>', unsafe_allow_html=True)
 
 # Title and description (English UI)
-st.markdown('<div class="main"><h1 class="stTitle">ProCV Craft: AI-Powered Resumes & Letters</h1>', unsafe_allow_html=True)
+st.markdown('<div class="main"><h1 class="stTitle">ProCV & cover letter Craft: Letters</h1>', unsafe_allow_html=True)
 st.write("Upload your CV, provide a job description, and let us tailor your application with Grok.")
 
 # Use containers for structured layout
