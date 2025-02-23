@@ -1,10 +1,4 @@
 streamlit
 python-docx
-langchain
-pdfplumber
-openai
-deepseek-transformers
-qwen
-grok-api
 requests
 python-dotenv
