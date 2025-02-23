@@ -91,7 +91,7 @@ st.markdown('<div class="logo"><img src="https://via.placeholder.com/150x50.png?
 
 # Title and description (English UI)
 st.markdown('<div class="main"><h1 class="stTitle">Automated CV & Cover Letter Generator</h1>', unsafe_allow_html=True)
-st.write("Upload your CV, provide a job description, and let us tailor your application with Grok.")
+st.write("Upload your CV, provide a job description, and let us tailor your application with AI.")
 
 # Use containers for structured layout
 with st.container():
